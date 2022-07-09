@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  frontend:
+    build: ./frontend
+    restart: always
+    ports:
+      - "3000"
+    networks:
+      - poll-tier
+
+  backend:
+    build: ./backend
+    restart: always
+    networks:
+      - back-tier
+
+  db:
+    image: mysql:5.7
+    ports:
+        - "33061:3306"
+    command: --init-file /data/application/init.sql
+    volumes:
+        - ./db/db.sql:/data/application/init.sql
+    environment:
+        MYSQL_ROOT_USER: root
+        MYSQL_ROOT_PASSWORD: 12345678
+        MYSQL_DATABASE: CTE
+        MYSQL_USER: root
+        MYSQL_PASSWORD: 12345678
+
+volumes:
+  db-data:
+    driver: local
+
+networks:
+  poll-tier:
+    driver: bridge
+  back-tier:
+    driver: bridge
