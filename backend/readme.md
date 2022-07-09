@@ -1,19 +1,12 @@
 API
 --
-to run : npm start
+to run : npm start or docker build -t <image> . => docker run -dp 8080:8080 <image>
 
 all the endpoints
-- /auth
-    - GET **/** (to get all the codes)
-    - POST **/register** (to create a brand new code)
-    - POST **/connect** (to check if a code given as parameter is found inside the DB)
-    - PUT **/regenerate** (to regenerate a code)
-- /actions
-    - POST **/add** (to add a new action to the db, inform the name, the action (JSON FORMAT) a block (XML FORMAT) and your code)
-    - PUT **/modify_base** (modify the name and color of an action)
-    - PUT **/modify_core** (modify the action (JSON) and the block (XML) of an action)
-    - GET **/** (get all the actions)
-    - POST **/automations** (get all the actions depending on a code)
-    - POST **/automations_m** (get all the actions depending on a code for mobile version)
-    - POST **/trigger_up** (modify to 1 the action depending on an id and a code)
-    - POST **/trigger_down** (modify to 0 the action depending on a code)
+- /url
+    - GET **/** (Returns all the url)
+    - GET **/:url** (Returns 0 or 1 depending if the url in parameter already exists)
+    - POST **/add** (Create a new URL page | needs a body with a URL and a valid password)
+    - PUT **/pswd** (Modify the password realated to a URL page | needs a body with the previous password, the URL and the new password)
+    - PUT **/cnt**  (Modify the content realated to a URL page | needs a body with the password, the URL and the new content)
+    - DELETE **/delete**  (Delete a URL page | needs a body with the password, and the URL of the page)

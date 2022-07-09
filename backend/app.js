@@ -17,6 +17,7 @@ app.use((req, res, next) => { // adding headers
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS') // allowing those types of request
   next()
 })
+
 app.use('/url', apiLimiter, actionRoutes)
 
 module.exports = app

@@ -151,11 +151,11 @@ exports.modifyContent = (req, res, next) => {
 exports.getUrl = (req, res, next) => {
     db.execute('SELECT * FROM url WHERE url = ?', [req.params.url], function (err, results, fields) {
         if (results && results[0]) {
-            res.status(200).json(...results);
+            res.status(200).json(1);
             return
         }
         else {
-            res.status(404).json({ error: "Not existing" });
+            res.status(404).json(0);
         }
     })
 }
