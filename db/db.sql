@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 09, 2022 at 02:41 PM
+-- Generation Time: Jul 09, 2022 at 04:52 PM
 -- Server version: 8.0.29-0ubuntu0.22.04.2
 -- PHP Version: 8.1.2
 
@@ -31,8 +31,15 @@ CREATE TABLE `content` (
   `id` int NOT NULL,
   `url_id` int NOT NULL,
   `password` varchar(255) NOT NULL,
-  `content` text NOT NULL
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `content`
+--
+
+INSERT INTO `content` (`id`, `url_id`, `password`, `content`) VALUES
+(9, 27, '666', 'asdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadad88');
 
 -- --------------------------------------------------------
 
@@ -50,8 +57,7 @@ CREATE TABLE `url` (
 --
 
 INSERT INTO `url` (`id`, `url`) VALUES
-(7, 'qweqweqwe'),
-(6, 'www');
+(27, '100');
 
 --
 -- Indexes for dumped tables
@@ -79,13 +85,13 @@ ALTER TABLE `url`
 -- AUTO_INCREMENT for table `content`
 --
 ALTER TABLE `content`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `url`
 --
 ALTER TABLE `url`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- Constraints for dumped tables
