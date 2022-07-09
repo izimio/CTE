@@ -1,7 +1,6 @@
-import './App.css';
 import React, {useEffect, useState} from "react"
 
-function App() {
+export default function Uri() {
   let [data, setData] = useState(() => 0)
 
   useEffect(() => {
@@ -31,5 +30,3 @@ function App() {
     </>
   );
 }
-
-export default App;
