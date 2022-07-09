@@ -1,8 +1,5 @@
-var db = require('../config/database.js');
-
-var colors = ['#B03A2E', '#6C3483', '#148F77', '#B7950B', '#AF601A', '#839192', '#2E4053', '#2E86C1', '#943126', '#BA4A00'];
-
-colors[Math.floor(Math.random() * colors.length)];
+const db = require('../config/database.js');
+const bcrypt = require('bcrypt')
 
 function check_validity(elem) {
 
@@ -11,56 +8,69 @@ function check_validity(elem) {
     return 1
 }
 
-exports.add = (req, res, next) => {
-    const name = req.body.name
-    const action = req.body.action
-    const block = req.body.block
-    const code = req.body.code
-    const color = colors[Math.floor(Math.random() * colors.length)];
+exports.createUrl = (req, res, next) => {
+    const url = req.body.url
+    const password = req.body.password
 
-    if (check_validity(name) && check_validity(action) && check_validity(block) && check_validity(color)) {
-        db.execute('SELECT * FROM `code_digit` WHERE code = (?)', [code], function (err, results, fields) {
-            if (results[0]) {
-                db.execute('INSERT INTO `actions` (name, color, action, block, code) VALUES (?, ?, ?, ?, ?)', [name, color, action, block, code], function (err, results, fields) {
+    if (check_validity(url)) {
+        db.execute('INSERT INTO `url` (`id`, `url`) VALUES (NULL, ?)', [url], function (err, results, fields) {
+            if (!err) {
+                db.execute(' INSERT INTO `content`(`id`, `url_id`, `password`, `content`) VALUES(NULL, ?, ?, NULL);', [results.insertId, password], function (err, results, fields) {
                     if (!err) {
-                        res.status(200).json({ name: name, color: color, action: action, block: block, id: results.insertId });
-                    }
-                    else
-                        res.status(404).json([]);
-                })
-            } else {
-                res.status(400).json([]);
-            }
 
+                        res.status(202).json({ statut: "Succesfully created" });
+                    }
+                    else {
+                        res.status(500).json({ error: "sus" });
+                    }
+                })
+            }
+            else if (err.errno == 1062) {
+                res.status(500).json({ error: "URL already used" });
+                return;
+            }
+            else {
+                res.status(500).json({ error: "cringe" });
+                return;
+            }
         })
     } else {
-        res.status(400).json([]);
+        res.status(400).json({ error: "Invalid URL name or password" });
     }
 }
 
-exports.modify_base = (req, res, next) => {
-    const name = req.body.name
-    const id = req.body.id
-    const code = req.body.code
-    const color = req.body.color
+exports.deleteUrl = (req, res, next) => {
+    const url = req.body.url
+    const password = req.body.password
 
-    if (check_validity(name) && check_validity(id) && check_validity(code) && check_validity(color)) {
-        db.execute('SELECT * FROM `actions` WHERE code = ? AND id = ?', [code, id], function (err, results, fields) {
+    if (check_validity(url) && check_validity(password)) {
+        db.execute('SELECT * FROM `content` WHERE password = ?', [password], function (err, results, fields) {
             if (results && results[0]) {
-                db.execute('UPDATE `actions` SET name = ?, color = ? WHERE code = ? AND id = ?', [name, color, code, id], function (err, results, fields) {
-                    if (results.affectedRows != 0) {
-                        res.status(200).json({});
+                const tmp = results[0]
+                db.execute('SELECT * FROM `url` WHERE id = ? AND url = ?', [tmp.url_id, url], function (err, results, fields) {
+                    if (results && results[0]) {
+                        const tmpb = results[0]
+                        db.execute('DELETE FROM `url` WHERE `url`.`id` = ?', [tmpb.id], function (err, results, fields) {
+                            if (!err) {
+                                res.status(401).json({ statut: "Succesfully deleted" });
+                                return;
+                            }
+                            else {
+                                res.status(500).json({ statut: "Not allowed" });
+                            }
+                        })
                     }
-                    else
-                        res.status(404).json([]);
+                    else {
+                        res.status(500).json({ statut: "Not allowed" });
+                    }
                 })
-            } else {
-                res.status(400).json([]);
             }
-
+            else {
+                res.status(500).json({ statut: "Not allowed" });
+            }
         })
     } else {
-        res.status(400).json([]);
+        res.status(500).json({ statut: "Not allowed" });
     }
 }
 
@@ -89,8 +99,8 @@ exports.delete = (req, res, next) => {
 }
 
 exports.getUrl = (req, res, next) => {
-    db.execute('SELECT * FROM url WHERE url = ?',[req.params.url],  function (err, results, fields) {  
-        if (results[0]) {
+    db.execute('SELECT * FROM url WHERE url = ?', [req.params.url], function (err, results, fields) {
+        if (results && results[0]) {
             res.status(200).json(...results);
             return
         }
@@ -101,7 +111,7 @@ exports.getUrl = (req, res, next) => {
 }
 
 exports.getAllUrl = (req, res, next) => {
-    db.execute('SELECT * FROM url ',  function (err, results, fields) {  
+    db.execute('SELECT * FROM url ', function (err, results, fields) {
         if (!err) {
             res.status(200).json(results);
             return
