@@ -1,7 +1,6 @@
 const http = require('http') 
 require('dotenv').config() //importing dotenv for the .env
 const app = require('./app') 
-console.log("salam")
 
 const normalizePort = val => { 
     const port = parseInt(val, 10)
@@ -43,7 +42,7 @@ server.on('error', errorHandler)
 server.on('listening', () => { 
     const address = server.address() 
     const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port 
-    console.log('Listening on ' + bind)
+    console.log('Listening on http://localhost:8080')
 })
 
 server.listen(port)

@@ -1,8 +1,7 @@
 const express = require('express')
 require('dotenv').config() //importing dotenv for the .env
 const bodyParser = require('body-parser')
-const authRoutes = require('./routes/auth')
-const actionRoutes = require('./routes/actions')
+const actionRoutes = require('./routes/url')
 const port = process.env.PORT
 const app = express() // Creating the API
 app.use(express.urlencoded({ extended: true }));
@@ -16,7 +15,6 @@ app.use((req, res, next) => { // adding headers
   next()
 })
 // all the routes
-app.use('/auth', authRoutes)
-app.use('/actions', actionRoutes)
+app.use('/url', actionRoutes)
 
 module.exports = app
