@@ -1,5 +1,5 @@
 {
-  "name": "Epytodo",
+  "name": "CTE",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -7,14 +7,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
   },
-  "author": "EPYTEZ",
+  "author": "Izimio",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.1",
     "dotenv": "^8.6.0",
     "express": "^4.17.2",
-    "jsonwebtoken": "^8.5.1",
+    "express-rate-limit": "^6.4.0",
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.19"
   }

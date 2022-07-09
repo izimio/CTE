@@ -70,31 +70,81 @@ exports.deleteUrl = (req, res, next) => {
             }
         })
     } else {
-        res.status(500).json({ statut: "Not allowed" });
+        res.status(500).json({ statut: "Invalid credentials" });
     }
 }
 
-exports.delete = (req, res, next) => {
-    const id = req.body.id
-    const code = req.body.code
+exports.modifyPassword = (req, res, next) => {
+    const url = req.body.url
+    const password = req.body.password
+    const new_password = req.body.new_password
 
-    if (check_validity(id) && check_validity(code)) {
-        db.execute('SELECT * FROM `actions` WHERE code = ? AND id = ?', [code, id], function (err, results, fields) {
+    if (check_validity(url) && check_validity(password) && check_validity(new_password)) {
+        db.execute('SELECT * FROM `content` WHERE password = ?', [password], function (err, results, fields) {
             if (results && results[0]) {
-                db.execute('DELETE FROM `actions` WHERE code = ? AND id = ?', [code, id], function (err, results, fields) {
-                    if (!err) {
-                        res.status(200).json({});
+                const tmp = results[0]
+                const sup_id = tmp.id
+                db.execute('SELECT * FROM `url` WHERE id = ? AND url = ?', [tmp.url_id, url], function (err, results, fields) {
+                    if (results && results[0]) {
+                        const tmpb = results[0]
+                        db.execute('UPDATE `content` SET `password` = ? WHERE `content`.`id` = ?', [new_password, sup_id], function (err, results, fields) {
+                            if (!err) {
+                                res.status(401).json({ statut: "Password succesfully modified for " + url });
+                                return;
+                            }
+                            else {
+                                res.status(500).json({ statut: "Not allowed" });
+                            }
+                        })
                     }
-                    else
-                        res.status(400).json([]);
+                    else {
+                        res.status(500).json({ statut: "Not allowed" });
+                    }
                 })
-            } else {
-                res.status(400).json([]);
             }
-
+            else {
+                res.status(500).json({ statut: "Not allowed" });
+            }
         })
     } else {
-        res.status(400).json([]);
+        res.status(500).json({ statut: "Invalid credentials" });
+    }
+}
+
+exports.modifyContent = (req, res, next) => {
+    const url = req.body.url
+    const password = req.body.password
+    const content = req.body.content
+
+    if (check_validity(url) && check_validity(password) && check_validity(content)) {
+        db.execute('SELECT * FROM `content` WHERE password = ?', [password], function (err, results, fields) {
+            if (results && results[0]) {
+                const tmp = results[0]
+                const sup_id = tmp.id
+                db.execute('SELECT * FROM `url` WHERE id = ? AND url = ?', [tmp.url_id, url], function (err, results, fields) {
+                    if (results && results[0]) {
+                        const tmpb = results[0]
+                        db.execute('UPDATE `content` SET `content` = ? WHERE `content`.`id` = ?', [content, sup_id], function (err, results, fields) {
+                            if (!err) {
+                                res.status(401).json({ statut: "Content succesfully modified for " + url });
+                                return;
+                            }
+                            else {
+                                res.status(500).json({ statut: "Not allowed" });
+                            }
+                        })
+                    }
+                    else {
+                        res.status(500).json({ statut: "Not allowed" });
+                    }
+                })
+            }
+            else {
+                res.status(500).json({ statut: "Not allowed" });
+            }
+        })
+    } else {
+        res.status(500).json({ statut: "Invalid credentials" });
     }
 }
 
