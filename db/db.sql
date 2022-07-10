@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 09, 2022 at 04:52 PM
+-- Generation Time: Jul 10, 2022 at 11:31 AM
 -- Server version: 8.0.29-0ubuntu0.22.04.2
 -- PHP Version: 8.1.2
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `content` (
   `id` int NOT NULL,
-  `url_id` int NOT NULL,
+  `url` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -38,26 +38,10 @@ CREATE TABLE `content` (
 -- Dumping data for table `content`
 --
 
-INSERT INTO `content` (`id`, `url_id`, `password`, `content`) VALUES
-(9, 27, '666', 'asdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadadasdadsadasssadadad88');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `url`
---
-
-CREATE TABLE `url` (
-  `id` int NOT NULL,
-  `url` varchar(80) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `url`
---
-
-INSERT INTO `url` (`id`, `url`) VALUES
-(27, '100');
+INSERT INTO `content` (`id`, `url`, `password`, `content`) VALUES
+(10, 'asdadadd', 'sssss', 'dasdasddasd'),
+(12, 'wwwwwwwwwwwwwwwww', 'sssss', 'dasdasddasd'),
+(13, 'amongus', '12345678', 'Sus');
 
 --
 -- Indexes for dumped tables
@@ -67,13 +51,6 @@ INSERT INTO `url` (`id`, `url`) VALUES
 -- Indexes for table `content`
 --
 ALTER TABLE `content`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `url_id` (`url_id`);
-
---
--- Indexes for table `url`
---
-ALTER TABLE `url`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `url` (`url`);
 
@@ -85,23 +62,7 @@ ALTER TABLE `url`
 -- AUTO_INCREMENT for table `content`
 --
 ALTER TABLE `content`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `url`
---
-ALTER TABLE `url`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `content`
---
-ALTER TABLE `content`
-  ADD CONSTRAINT `content_ibfk_1` FOREIGN KEY (`url_id`) REFERENCES `url` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
