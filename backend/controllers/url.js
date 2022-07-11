@@ -100,14 +100,13 @@ exports.modifyContent = (req, res, next) => {
 
 exports.getUrl = (req, res, next) => {
     const password = req.body.password
-
     db.execute('SELECT (content) FROM content WHERE url = ? AND password = ?', [req.params.url, password], function (err, results, fields) {
         if (results && results[0]) {
             res.status(200).json(results[0]);
             return
         }
         else {
-            res.status(500).json(0);
+            res.status(500).json({err: "Not allowed" });
         }
     })
 }

@@ -18,6 +18,6 @@ app.use((req, res, next) => { // adding headers
   next()
 })
 
-app.use('/url', apiLimiter, actionRoutes)
+app.use('/url', actionRoutes)
 
 module.exports = app
