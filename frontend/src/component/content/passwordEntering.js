@@ -11,12 +11,12 @@ export default function ContentUrl(props) {
         fetchWithBody("POST", `http://localhost:4000/url/` + id, { password: password }, setData)
     }
     return (
-        <>
+        <div className="content_all">
             <input type="text" value={password} onChange={(e) => setPassword(e.target.value)} />
             <button onClick={() => launch_passwd_check()}>Submit</button>
-            <div>
+            <div className="txtarea">
                 <textarea defaultValue={data.content}></textarea>
             </div>
-        </>
+        </div>
     );
 }

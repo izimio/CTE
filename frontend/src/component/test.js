@@ -7,7 +7,7 @@ export default function Uri() {
     const getData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8080/url/`
+          `http://localhost:4000/url/`
         );
         if (!response.ok) {
           throw new Error(

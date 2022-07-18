@@ -5,21 +5,26 @@ import {
     Route,
     // Link
 } from "react-router-dom";
-import Uri from "../component/test"
 import NotFound from "../component/Notfound"
-import Url from "../component/content/contentCheckor"
+import Url from "../component/content/ContentCheckor"
+import Home from "../component/container/HomeContainer"
+
+import Navbar from "../component/container/ContainerNavbar"
 export default function Router() {
     return (
         <Switch>
             <Routes>
-                <Route path="/about" element={<Uri />} />
-                <Route path="/users" />
-                <Route path="/" element={<Uri />} />
+                <Route path="/" element={
+                    <>
+                        <Navbar />
+                        <Home />
+                    </>
+                } />
                 <Route path="/:id" element={<Url />} />
-            {/* 404 Not Found page */}
-            <Route element={<NotFound />} />
-            <Route path='*' element={<NotFound />} />
-            <Route path='' element={<NotFound />} />
+                {/* 404 Not Found page */}
+                <Route element={<NotFound />} />
+                <Route path='*' element={<NotFound />} />
+                <Route path='' element={<NotFound />} />
             </Routes>
         </Switch>
     );

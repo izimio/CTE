@@ -8,7 +8,7 @@ export default function ContentUrl() {
         const getData = async () => {
             try {
                 const response = await fetch(
-                    `http://localhost:8080/url/check/` + id
+                    `http://localhost:4000/url/check/` + id
                 );
                 if (!response.ok) {
                     throw new Error(
