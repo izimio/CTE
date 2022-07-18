@@ -22,9 +22,9 @@ export default function Router() {
                 } />
                 <Route path="/:id" element={<Url />} />
                 {/* 404 Not Found page */}
-                <Route element={<NotFound />} />
+                {/* <Route element={<NotFound />} />
                 <Route path='*' element={<NotFound />} />
-                <Route path='' element={<NotFound />} />
+                <Route path='' element={<NotFound />} /> */}
             </Routes>
         </Switch>
     );

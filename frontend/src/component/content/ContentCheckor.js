@@ -10,7 +10,7 @@ export default function ContentUrl() {
     useEffect((data) => {
         fetchWithBody("GET", `http://localhost:4000/url/check/` + id, {}, setData)
         console.log(data)
-    }, [])
+    }, [data])
 
     return (
         <>

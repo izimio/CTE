@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export default function ContentNavbar() {
     return (
         <nav>
-            <Box p='6' className="nav-container" rounded='md' pl="3em" pr="3em" pt="1em">
+            <Box p='6' className="nav-container" pl="3em" pr="3em" pt="1em">
                 <Flex justifyContent="space-between" alignItems="center">
                     <Box w="30%">
                         <Link to="/"><img src={Logo} alt="logo" /></Link>
