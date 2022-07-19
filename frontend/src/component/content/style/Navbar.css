@@ -11,6 +11,7 @@ img {
 .link {
     text-decoration: none;
     color: black;
+    transition: 200ms;
 }
 
 .li-nav {

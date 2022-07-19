@@ -27,3 +27,19 @@ code {
   text-align: center;
   font-size: 30px;
 }
+
+.green{
+  color: #5cb85c;
+}
+
+.red{
+  color: #d9534f;
+}
+
+.blue{
+  color: #337ab7;
+}
+
+.orange{
+  color: #ffc107;
+}

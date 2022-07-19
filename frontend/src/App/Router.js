@@ -13,18 +13,16 @@ import Navbar from "../component/container/ContainerNavbar"
 export default function Router() {
     return (
         <Switch>
+            <Navbar />
             <Routes>
                 <Route path="/" element={
-                    <>
-                        <Navbar />
-                        <Home />
-                    </>
+                    <Home />
                 } />
                 <Route path="/:id" element={<Url />} />
                 {/* 404 Not Found page */}
-                {/* <Route element={<NotFound />} />
+                <Route element={<NotFound />} />
                 <Route path='*' element={<NotFound />} />
-                <Route path='' element={<NotFound />} /> */}
+                <Route path='' element={<NotFound />} />
             </Routes>
         </Switch>
     );
