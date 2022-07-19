@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useHistory } from "react"
-import { useParams } from "react-router-dom"
+import React, { useCallback, useEffect, useState } from "react"
+import { useParams, useNavigate } from "react-router-dom"
 import fetchWithBody from "../fetch"
 import { Box, Center } from "@chakra-ui/react"
 import LogoLock from "../../assets/lock.png"
@@ -12,61 +12,131 @@ export default function ContentUrl() {
     let [data, setData] = useState(() => 0)
     let [password, setPassword] = useState(() => "")
     let { id } = useParams()
-    const history = useHistory();
+    const navigate = useNavigate();
+    const [ls, setLs] = useState(() => localStorage.getItem("credentials") ? JSON.parse(localStorage.getItem("credentials")) : {})
+    console.log(ls)
 
+    console.log(ls)
     useEffect((data) => {
         fetchWithBody("GET", `http://localhost:4000/url/check/` + id, {}, setData)
     }, [id])
+    // uevent listhener on enter key
 
-    function managePassword() {
+
+
+
+
+
+
+    const manageLock = useCallback(() => {
+        fetch(`http://localhost:4000/url/check/pwsd`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                url: id,
+                password: password
+            })
+        })
+            .catch(err => {
+                toast.error(err, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    draggable: true,
+                    progress: undefined,
+                    className: "toast-error"
+                })
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res === 1) {
+                    toast.success("Acces granted", {
+                        position: "top-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        draggable: true,
+                        progress: undefined,
+                        className: "toast-success"
+                    })
+                    localStorage.clear()
+                    localStorage.setItem("credentials", JSON.stringify({ password: password, url: id }))
+                    navigate("/")
+                }
+                else
+                    toast.error("Wrong password", {
+                        position: "top-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        draggable: true,
+                        progress: undefined,
+                        className: "toast-error"
+                    })
+            })
+    }, [password, id, navigate])
+    const manageKey = useCallback(() => {
+        toast.success("Acces granted")
+        return;
+        fetch(`http://localhost:4000/url/add`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                url: id,
+                password: password
+            })
+        })
+            .catch(err => {
+                toast.error(err, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    draggable: true,
+                    progress: undefined,
+                    className: "toast-error"
+                })
+            })
+            .then(res => res.json())
+            .then(res => { })
+    }, [password, id])
+    // function with usecallback
+    const managePassword = useCallback(() => {
         if (!password)
             return;
         if (data) {
-            fetch(`http://localhost:4000/url/check/pwsd`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    url: id,
-                    password: password
-                })
-            })
-                .then(res => res.json())
-                .then(res => {
-                    if (res === 1) {
-                        toast.success("Acces granted", {
-                            position: "top-center",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            draggable: true,
-                            progress: undefined,
-                            className: "toast-success"
-                        })
-                        localStorage.clear()
-                        localStorage.setItem("credentials" , {password: password, url: id})
-                    }
-                    else
-                        toast.error("Wrong password", {
-                            position: "top-center",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            draggable: true,
-                            progress: undefined,
-                            className: "toast-error"
-                        })
-                })
+            manageLock()
 
+        } else {
+            manageKey()
         }
-        // toast.info("Password saved", {
-        //     position: "bottom-right",
-        //     autoClose: 3000,
-        //     hideProgressBar: false,
-        //     closeOnClick: true,
-        // });
-    }
+            // toast.info("Password saved", {
+            //     position: "bottom-right",
+            //     autoClose: 3000,
+            //     hideProgressBar: false,
+            //     closeOnClick: true,
+            // });
+        }, [password, data, manageLock, manageKey])
+
+    useEffect(() => {
+        window.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                managePassword()
+            }
+        })
+        return () => {
+            window.removeEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    managePassword()
+                }
+            })
+        }
+    }, [managePassword])
     return (
         <>
             {data ?
