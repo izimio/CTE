@@ -4,6 +4,7 @@ const urlCtrl = require('../controllers/url')
 
 router.get('/', urlCtrl.getAllUrl)
 router.post('/:url', urlCtrl.getUrl)
+router.post('/check/pwsd', urlCtrl.checkPswd)
 router.get('/check/:url', urlCtrl.checkUrl)
 router.post('/add', urlCtrl.createUrl)
 router.put('/pswd', urlCtrl.modifyPassword)

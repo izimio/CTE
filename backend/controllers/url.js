@@ -111,6 +111,19 @@ exports.getUrl = (req, res, next) => {
     })
 }
 
+exports.checkPswd = (req, res, next) => {
+    const url = req.body.url
+    const password = req.body.password
+    db.execute('SELECT (id) FROM content WHERE url = ? AND password = ?', [url, password], function (err, results, fields) {
+        if (results && results[0]) {
+            res.status(200).json(1);
+        }
+        else {
+            res.status(200).json(0);
+        }
+    })
+}
+
 exports.checkUrl = (req, res, next) => {
     db.execute('SELECT (id) FROM content WHERE url = ?', [req.params.url], function (err, results, fields) {
         if (results && results[0]) {
