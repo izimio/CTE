@@ -1,7 +1,7 @@
 import { Box, Flex } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import "./style/Home.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import fetchWithBody from "../fetch";
 import { FiArrowUpRight } from "react-icons/fi";
 
@@ -9,19 +9,18 @@ export default function ContentHome() {
 
     let [data, setData] = useState("");
     let [taken, setTaken] = useState(false);
+    let navigate = useNavigate();
 
     useEffect(() => {
         if (data) {
             fetchWithBody("GET", `http://localhost:4000/url/check/` + data, {}, setTaken)
         }
     }, [data])
-
-    const WhatIsIt = () => {
-        return (
-            <>
-
-            </>
-        )
+    // handle keypress enter with navigation
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            navigate("/" + data);
+        }
     }
     return (
         <main className="home-ctn">
@@ -39,7 +38,7 @@ export default function ContentHome() {
                 <Box className="home-launch" mt="7em">
                     <Flex className="home-launch-upper" align="center">
                         <p>Http:/cte/</p>
-                        <input type="text" value={data} onChange={(e) => setData(e.target.value.trim())} />
+                        <input type="text" value={data} onChange={(e) => setData(e.target.value.trim())} onKeyUp={((e) => handleKeyPress(e))}/>
                         <Box className="home-launch-indicator" bg={!data ? "grey" : !taken ? "#5cb85c" : "#d9534f"} w="100px" h="50px" >
                             {!data ? "Empty" : !taken ? "Open" : "Protected"}
                         </Box>
@@ -51,7 +50,6 @@ export default function ContentHome() {
                         <FiArrowUpRight className="home-launch-send-icon"/>
                     </Link>
                 </Box>
-                <WhatIsIt />
             </Box>
         </main>
     );

@@ -13,7 +13,7 @@ export default async function fetchWithBody(type, url, body, setValue) {
         body: JSON.stringify(body)
     }
     const response = type === 'GET' ? await fetch(url, paramG) : await fetch(url, paramP);
-    console.log(response)
+    // console.log(response)
     if (!response.ok) {
         return (() => { 
             setValue(0);

@@ -13,20 +13,11 @@ export default function ContentUrl() {
     let [password, setPassword] = useState(() => "")
     let { id } = useParams()
     const navigate = useNavigate();
-    const [ls, setLs] = useState(() => localStorage.getItem("credentials") ? JSON.parse(localStorage.getItem("credentials")) : {})
-    console.log(ls)
+    const [ls] = useState(() => localStorage.getItem("credentials") ? JSON.parse(localStorage.getItem("credentials")) : {})
 
-    console.log(ls)
     useEffect((data) => {
         fetchWithBody("GET", `http://localhost:4000/url/check/` + id, {}, setData)
     }, [id])
-    // uevent listhener on enter key
-
-
-
-
-
-
 
     const manageLock = useCallback(() => {
         fetch(`http://localhost:4000/url/check/pwsd`, {
@@ -79,8 +70,6 @@ export default function ContentUrl() {
             })
     }, [password, id, navigate])
     const manageKey = useCallback(() => {
-        toast.success("Acces granted")
-        return;
         fetch(`http://localhost:4000/url/add`, {
             method: "POST",
             headers: {
@@ -105,38 +94,27 @@ export default function ContentUrl() {
             .then(res => res.json())
             .then(res => { })
     }, [password, id])
-    // function with usecallback
+
     const managePassword = useCallback(() => {
-        if (!password)
-            return;
         if (data) {
             manageLock()
-
         } else {
             manageKey()
         }
-            // toast.info("Password saved", {
-            //     position: "bottom-right",
-            //     autoClose: 3000,
-            //     hideProgressBar: false,
-            //     closeOnClick: true,
-            // });
-        }, [password, data, manageLock, manageKey])
+    }, [data, manageLock, manageKey])
 
-    useEffect(() => {
-        window.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") {
-                managePassword()
-            }
-        })
-        return () => {
-            window.removeEventListener("keydown", (e) => {
-                if (e.key === "Enter") {
-                    managePassword()
-                }
-            })
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            managePassword()
         }
-    }, [managePassword])
+    }
+    if (ls.url === id) {
+        return (
+            <>
+                YOink
+            </>
+        )
+    }
     return (
         <>
             {data ?
@@ -153,13 +131,11 @@ export default function ContentUrl() {
                     <h1 className="content-all-title"><span style={{ color: "#5cb85c" }}>How nice ! </span> Nobody already claimed that url. <br /> you can make it yours by creating a password to protect it</h1>
                 </Box>}
             <Center className="content-input">
-                <input type={data ? "password" : "text"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder={data ? "Enter the password" : "Create a password"} />
+                <input type={data ? "password" : "text"} value={password} onKeyUp={((e) => password && handleKeyPress(e))} onChange={(e) => setPassword(e.target.value)} placeholder={data ? "Enter the password" : "Create a password"} />
                 <Box className="content-input-button" onClick={managePassword} bg={password ? "#28a4c9" : "grey"} p="0.5em">
                     Submit
                 </Box>
             </Center>
-
-            {/* {data ? <LoggingUrl existingUrl={data}/> : <CreateUrl />} */}
             <ToastContainer />
         </>
     );

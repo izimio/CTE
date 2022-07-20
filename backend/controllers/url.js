@@ -12,6 +12,8 @@ exports.createUrl = (req, res, next) => {
     const url = req.body.url
     const password = req.body.password
 
+    console.log(url)
+    console.log(password)
     if (check_validity(url)) {
         db.execute('INSERT INTO `content` (`url`, `password`) VALUES (?, ?)', [url, password], function (err, results, fields) {
             if (!err) {
